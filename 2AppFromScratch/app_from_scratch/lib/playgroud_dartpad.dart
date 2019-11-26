@@ -21,7 +21,7 @@ class Person
 void main() 
 {
   Person robert = Person("Robert");
-  Person vladimir = Person("Vladimir", livePointSet:150);
+  Person vladimir = Person("Vladimir", inputLivePoint:150);
   print(robert.livePoint);
   print(vladimir.livePoint);
   robert.dammageReceived(110);
