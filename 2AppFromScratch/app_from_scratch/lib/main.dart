@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import './question.dart';
+import './answer.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -23,25 +26,16 @@ class _MyAppState extends State<MyApp> {
     var questions = [
       "What is your favorite sport ?",
       "What is your favorite game ?",
-      "What is your favourite programming language ?"
+      "What is your favourite programming language ?",
     ];
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(title: Text('My First App')),
           body: Column(children: [
-            Text(questions[_indexQuestion]),
-            RaisedButton(
-              child: Text('Question 1'),
-              onPressed: () => _clickButtonQuestion(0),
-            ),
-            RaisedButton(
-              child: Text('Question 2'),
-              onPressed: () => _clickButtonQuestion(1),
-            ),
-            RaisedButton(
-              child: Text('Question 3'),
-              onPressed: () => _clickButtonQuestion(2),
-            ),
+            Question(questions[_indexQuestion]),
+            Answer(questionText:"Question 1", toExecuteOnPressed:()=>_clickButtonQuestion(0)),
+            Answer(questionText:"Question 2", toExecuteOnPressed:()=>_clickButtonQuestion(1)),
+            Answer(questionText:"Question 3", toExecuteOnPressed:()=>_clickButtonQuestion(2)),
           ])),
     );
   }
