@@ -21,14 +21,16 @@ class _MyAppState extends State<MyApp> {
       "quesionText": "What is your favorite sport ?",
       "answers": [
         {"text": "Football", "score": 0},
-        {"text": "Tennis", "score": 5},
-        {"text": "Taekwondo", "score": 10}
+        {"text": "Tennis", "score": 4},
+        {"text": "Taekwondo", "score": 10},
+        {"text": "Just Dance", "score": 5},
       ]
     },
     {
       "quesionText": "What is your favorite animal ?",
       "answers": [
         {"text": "Horse", "score": 10},
+        {"text": "Frog", "score": 0},
         {"text": "Cat", "score": 5},
         {"text": "Dog", "score": 0}
       ]
@@ -37,7 +39,8 @@ class _MyAppState extends State<MyApp> {
       "quesionText": "What is your favorite programming language ?",
       "answers": [
         {"text": "Python", "score": 10},
-        {"text": "Java", "score": 0},
+        {"text": "Java", "score": 4},
+        {"text": "C", "score": 0},
         {"text": "Dart", "score": 5}
       ]
     },
