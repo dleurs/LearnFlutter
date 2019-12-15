@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,16 +21,14 @@ class _MyAppState extends State<MyApp> {
       "quesionText": "What is your favorite sport ?",
       "answers": [
         {"text": "Football", "score": 0},
-        {"text": "Tennis", "score": 4},
-        {"text": "Taekwondo", "score": 10},
-        {"text": "Just Dance", "score": 5},
+        {"text": "Tennis", "score": 5},
+        {"text": "Taekwondo", "score": 10}
       ]
     },
     {
       "quesionText": "What is your favorite animal ?",
       "answers": [
         {"text": "Horse", "score": 10},
-        {"text": "Frog", "score": 0},
         {"text": "Cat", "score": 5},
         {"text": "Dog", "score": 0}
       ]
@@ -39,8 +37,7 @@ class _MyAppState extends State<MyApp> {
       "quesionText": "What is your favorite programming language ?",
       "answers": [
         {"text": "Python", "score": 10},
-        {"text": "Java", "score": 4},
-        {"text": "C", "score": 0},
+        {"text": "Java", "score": 0},
         {"text": "Dart", "score": 5}
       ]
     },
@@ -58,25 +55,24 @@ class _MyAppState extends State<MyApp> {
   void _resetButton() {
     setState(() {
       _indexQuestion = 0;
+      _scoreUser = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      "What is your favorite sport ?",
-      "What is your favorite game ?",
-      "What is your favourite programming language ?",
-    ];
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(title: Text('My First App')),
-          body: Column(children: [
-            Question(questions[_indexQuestion]),
-            Answer(questionText:"Question 1", toExecuteOnPressed:()=>_clickButtonQuestion(0)),
-            Answer(questionText:"Question 2", toExecuteOnPressed:()=>_clickButtonQuestion(1)),
-            Answer(questionText:"Question 3", toExecuteOnPressed:()=>_clickButtonQuestion(2)),
-          ])),
-    );
+        home: Scaffold(
+            appBar: AppBar(title: Text('My First App')),
+            body: _indexQuestion < questionsAndAnswers.length
+                ? Quiz(
+                    questionsAndAnswers: questionsAndAnswers,
+                    indexQuestion: _indexQuestion,
+                    clickButtonQuestion: _clickButtonQuestion,
+                  )
+                : Result(
+                    resetButton: _resetButton,
+                    scoreUser: _scoreUser,
+                  )));
   }
 }

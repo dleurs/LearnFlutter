@@ -9,9 +9,9 @@ class Quiz extends StatelessWidget {
   final Function clickButtonQuestion;
 
   Quiz(
-      {this.questionsAndAnswers,
-      this.indexQuestion,
-      this.clickButtonQuestion});
+      {@required this.questionsAndAnswers,
+      @required this.indexQuestion,
+      @required this.clickButtonQuestion});
 
   @override
   Widget build(BuildContext context) {

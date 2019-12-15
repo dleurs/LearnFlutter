@@ -5,7 +5,7 @@ class Result extends StatelessWidget {
   final Function resetButton;
   final int scoreUser;
 
-  Result({this.resetButton, this.scoreUser});
+  Result({@required this.resetButton, @required this.scoreUser});
 
   @override
   Widget build(BuildContext context) {
