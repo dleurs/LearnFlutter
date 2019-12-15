@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './quiz.dart';
-import './result.dart';
+import './question.dart';
+import './answer.dart';
 
 void main() {
   runApp(MyApp());
@@ -58,24 +58,25 @@ class _MyAppState extends State<MyApp> {
   void _resetButton() {
     setState(() {
       _indexQuestion = 0;
-      _scoreUser = 0;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var questions = [
+      "What is your favorite sport ?",
+      "What is your favorite game ?",
+      "What is your favourite programming language ?",
+    ];
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(title: Text('My First App')),
-            body: _indexQuestion < questionsAndAnswers.length
-                ? Quiz(
-                    questionsAndAnswers: questionsAndAnswers,
-                    indexQuestion: _indexQuestion,
-                    clickButtonQuestion: _clickButtonQuestion,
-                  )
-                : Result(
-                    resetButton: _resetButton,
-                    scoreUser: _scoreUser,
-                  )));
+      home: Scaffold(
+          appBar: AppBar(title: Text('My First App')),
+          body: Column(children: [
+            Question(questions[_indexQuestion]),
+            Answer(questionText:"Question 1", toExecuteOnPressed:()=>_clickButtonQuestion(0)),
+            Answer(questionText:"Question 2", toExecuteOnPressed:()=>_clickButtonQuestion(1)),
+            Answer(questionText:"Question 3", toExecuteOnPressed:()=>_clickButtonQuestion(2)),
+          ])),
+    );
   }
 }

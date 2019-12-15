@@ -1,4 +1,4 @@
-package com.example.app_from_scratch
+package com.scorequiz.app_from_scratch
 
 import android.os.Bundle
 
