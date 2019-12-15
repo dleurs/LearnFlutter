@@ -25,6 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 <<<<<<< HEAD
+<<<<<<< HEAD
         appBar: AppBar(title: Text('Baby Name Votes')),
         body: Column(
           children: <Widget>[
@@ -52,6 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _buildBody(context),
     );
 >>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
+=======
+      appBar: AppBar(title: Text('Baby Name Votes')),
+      body: _buildBody(context),
+    );
+>>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
   }
 
   Widget _buildBody(BuildContext context) {
@@ -71,7 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListView(
       padding: const EdgeInsets.only(top: 20.0),
 <<<<<<< HEAD
+<<<<<<< HEAD
       shrinkWrap: true,
+=======
+>>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
 =======
 >>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
@@ -93,6 +102,12 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(record.name),
           trailing: Text(record.votes.toString()),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+          //onTap: () => print(record),
+          //onTap: () => record.reference.updateData({'votes': record.votes + 1}) race condition problem here
+          //onTap: () => record.reference.updateData({'votes': FieldValue.increment(1)}) // solving the race condition for simple changes
+>>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
 =======
           //onTap: () => print(record),
           //onTap: () => record.reference.updateData({'votes': record.votes + 1}) race condition problem here
