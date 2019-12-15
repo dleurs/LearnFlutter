@@ -24,6 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
         appBar: AppBar(title: Text('Baby Name Votes')),
         body: Column(
           children: <Widget>[
@@ -46,6 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ));
+=======
+      appBar: AppBar(title: Text('Baby Name Votes')),
+      body: _buildBody(context),
+    );
+>>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
   }
 
   Widget _buildBody(BuildContext context) {
@@ -64,7 +70,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     return ListView(
       padding: const EdgeInsets.only(top: 20.0),
+<<<<<<< HEAD
       shrinkWrap: true,
+=======
+>>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
   }
@@ -83,6 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListTile(
           title: Text(record.name),
           trailing: Text(record.votes.toString()),
+<<<<<<< HEAD
+=======
+          //onTap: () => print(record),
+          //onTap: () => record.reference.updateData({'votes': record.votes + 1}) race condition problem here
+          //onTap: () => record.reference.updateData({'votes': FieldValue.increment(1)}) // solving the race condition for simple changes
+>>>>>>> parent of c1e5b30... Finished Google Auth, beginning The Net Ninja one
           onTap: () => Firestore.instance.runTransaction((transaction) async {
             final freshSnapshot = await transaction.get(record.reference);
             final fresh = Record.fromSnapshot(freshSnapshot);
