@@ -1,5 +1,6 @@
 import 'package:flutter_auth_app/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_auth_app/models/userAndError.dart';
 
 class AuthService {
 
@@ -30,9 +31,28 @@ class AuthService {
   }
 
   // sign in with email and password
-
+  Future signInWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
+      return user;
+    } catch (error) {
+      print(error.toString());
+      return null;
+    } 
+  }
 
   // register with email and password
+  Future registerWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
+      return UserAndError(user:_userFromFirebaseUser(user), error: null);
+    } catch (error) {
+      print(error.toString());
+      return UserAndError(user:null, error: error);
+    } 
+  }
 
   // sign out
   Future signOut() async {
