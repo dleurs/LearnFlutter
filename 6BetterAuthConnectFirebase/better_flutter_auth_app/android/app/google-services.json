@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1022730680332",
+    "firebase_url": "https://better-flutter-auth-app.firebaseio.com",
+    "project_id": "better-flutter-auth-app",
+    "storage_bucket": "better-flutter-auth-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022730680332:android:24140ad5735074ba7b9629",
+        "android_client_info": {
+          "package_name": "com.example.better_flutter_auth_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022730680332-2qcpofkiibtndg29ucjl3qsjo8vqjrs5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.better_flutter_auth_app",
+            "certificate_hash": "9e808d7975074dc623ca13cf5ea0fd72217d5869"
+          }
+        },
+        {
+          "client_id": "1022730680332-paodfalnpthutslgck1j4jmhj7r87ddk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbHnpVdBu3CpkOdQu6k_GGd0FKH500-OU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022730680332-paodfalnpthutslgck1j4jmhj7r87ddk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
