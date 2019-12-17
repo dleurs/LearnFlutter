@@ -1,5 +1,6 @@
 import 'package:flutter_auth_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth_app/shared/centeredText.dart';
 
 class Home extends StatelessWidget {
 
@@ -9,10 +10,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        backgroundColor: Colors.brown[50],
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('Brew Crew'),
-          backgroundColor: Colors.brown[400],
+          title: Text('My App'),
+          backgroundColor: Colors.blue,
           elevation: 0.0,
           actions: <Widget>[
             FlatButton.icon(
@@ -24,6 +25,11 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
+        body: Column(
+          children: <Widget>[
+            CenteredText("Hello user !"),
+          ],
+        )
       ),
     );
   }

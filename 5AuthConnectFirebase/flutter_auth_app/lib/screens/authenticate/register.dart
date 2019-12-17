@@ -2,6 +2,7 @@ import 'package:flutter_auth_app/models/userAndError.dart';
 import 'package:flutter_auth_app/services/auth.dart';
 import 'package:flutter_auth_app/shared/constants.dart';
 import 'package:flutter_auth_app/shared/loading.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -27,9 +28,9 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.brown[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.blue,
         elevation: 0.0,
         title: Text('Sign up to Brew Crew'),
         actions: <Widget>[
@@ -49,9 +50,11 @@ class _RegisterState extends State<Register> {
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'email'),
-                validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                validator: (val) => !EmailValidator.validate(val, true) // import 'package:email_validator/email_validator.dart';
+                    ? 'Not a valid email.'
+                    : null,
                 onChanged: (val) {
-                  setState(() => email = val);
+                  setState(() => email = val.trim());
                 },
               ),
               SizedBox(height: 20.0),
