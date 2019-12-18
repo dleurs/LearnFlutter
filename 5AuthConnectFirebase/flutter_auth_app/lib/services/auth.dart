@@ -1,6 +1,6 @@
 import 'package:flutter_auth_app/models/user.dart';
+import 'package:flutter_auth_app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_auth_app/models/userAndError.dart';
 
 class AuthService {
 
@@ -19,28 +19,26 @@ class AuthService {
   }
 
   // sign in anon
-  /*
   Future signInAnon() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
-      return UserAndError(user:_userFromFirebaseUser(user), error: null);
-    } catch (error) {
-      print(error.toString());
-      return UserAndError(user:null, error: error);
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
-  */
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
       AuthResult result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      //FirebaseUser user = result.user;
-      return UserAndError(user:_userFromFirebaseUser(result.user), error: null);
+      FirebaseUser user = result.user;
+      return user;
     } catch (error) {
       print(error.toString());
-      return UserAndError(user:null, error: error);
+      return null;
     } 
   }
 
@@ -49,10 +47,12 @@ class AuthService {
     try {
       AuthResult result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       FirebaseUser user = result.user;
-      return UserAndError(user:_userFromFirebaseUser(user), error: null);
+      // create a new document for the user with the uid
+      await DatabaseService(uid: user.uid).updateUserData('0','new crew member', 100);
+      return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
-      return UserAndError(user:null, error: error);
+      return null;
     } 
   }
 

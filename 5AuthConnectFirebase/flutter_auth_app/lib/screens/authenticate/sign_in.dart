@@ -1,6 +1,5 @@
 import 'package:flutter_auth_app/services/auth.dart';
 import 'package:flutter_auth_app/shared/constants.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter_auth_app/shared/loading.dart';
 import 'package:flutter/material.dart';
 
@@ -27,9 +26,9 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.brown[100],
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Sign in to Brew Crew'),
         actions: <Widget>[
@@ -49,11 +48,9 @@ class _SignInState extends State<SignIn> {
               SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'email'),
-                validator: (val) => !EmailValidator.validate(val, true)
-                    ? 'Not a valid email.'
-                    : null,
+                validator: (val) => val.isEmpty ? 'Enter an email' : null,
                 onChanged: (val) {
-                  setState(() => email = val.trim());
+                  setState(() => email = val);
                 },
               ),
               SizedBox(height: 20.0),
@@ -67,19 +64,19 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20.0),
               RaisedButton(
-                color: Colors.blue[400],
+                color: Colors.pink[400],
                 child: Text(
                   'Sign In',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
                     setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                    if(result.user == null) {
+                    if(result == null) {
                       setState(() {
                         loading = false;
-                        error = result.error.message;
+                        error = 'Could not sign in with those credentials';
                       });
                     }
                   }
