@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1022730680332-m28q6mjodc8r9kuenmj3g0af9ai7l2qm.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1022730680332-m28q6mjodc8r9kuenmj3g0af9ai7l2qm</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1022730680332-2qcpofkiibtndg29ucjl3qsjo8vqjrs5.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC0cMNtwGw8m7BMozNJiBbINNIgrZeLjC0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1022730680332</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.betterFlutterAuthApp</string>
+	<key>PROJECT_ID</key>
+	<string>better-flutter-auth-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>better-flutter-auth-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1022730680332:ios:6c0b8e1940aaaf9d7b9629</string>
+	<key>DATABASE_URL</key>
+	<string>https://better-flutter-auth-app.firebaseio.com</string>
+</dict>
+</plist>
