@@ -21,4 +21,6 @@ class User {
   
   bool getIsAnonymous() => _isAnonymous;
 
+  String toString() => "uid: ${this.uid}";
+
 }
