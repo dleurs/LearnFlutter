@@ -31,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/default.png',
+              'assets/images/flutter_icon.png',
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
