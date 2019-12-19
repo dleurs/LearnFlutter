@@ -152,7 +152,7 @@ class Auth {
           return 'This email address already has an account.';
           break;
         default:
-          return 'Unknown error occured.';
+          return 'Unknown error occured. (${e.message})';
       }
     } else {
       return 'Unknown error occured.';
