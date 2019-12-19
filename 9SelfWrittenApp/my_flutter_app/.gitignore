@@ -1,3 +1,7 @@
+# Firebase iOS and Android keys
+ios/GoogleService-Info.plist
+android/app/google-services.json
+
 # Miscellaneous
 *.class
 *.log
