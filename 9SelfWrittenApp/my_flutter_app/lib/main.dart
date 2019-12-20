@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/ui/widgets/welcomeUser.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
@@ -11,21 +12,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-         child: MaterialApp(
-      title: 'My Flutter App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      child: MaterialApp(
+        title: 'My Flutter App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => FirstScreen(),
+        },
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => FirstScreen(),
-      },
-    ),
     );
   }
 }
 
 class FirstScreen extends StatelessWidget {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -37,12 +40,27 @@ class FirstScreen extends StatelessWidget {
     }
     */
     return Scaffold(
-      appBar: AppBar(
-        title: Text('First Screen'),
-      ),
-      body: Center(
-        child: Text(user.toString()),
-      ),
-    );
+        appBar: AppBar(
+          title: Text('First Screen'),
+        ),
+        body: WelcomeUser(
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                Text(user.toString()),
+                /*
+              RaisedButton(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              child: Text(
+              'Logout'
+              ),
+            )
+            */
+              ],
+            ),
+          ),
+        ));
   }
 }
