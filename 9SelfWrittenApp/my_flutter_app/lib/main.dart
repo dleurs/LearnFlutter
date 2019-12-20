@@ -43,7 +43,7 @@ class FirstScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('First Screen'),
         ),
-        body: WelcomeUser(
+        body: WelcomeUser( // Only show up if the user open the app for first time
           child: Center(
             child: Column(
               children: <Widget>[

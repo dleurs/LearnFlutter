@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-// I need a Stateful Widget, and not a Stateless Widget, because I need the widget to rebuild when show is put to false
-class WelcomeUser extends StatefulWidget { 
+// I need a Stateful Widget, and not a Stateless Widget,
+// because I need the widget to rebuild when this.show is put to false
+class WelcomeUser extends StatefulWidget {
   final double opacity;
   final Color color;
   final Widget child;
@@ -29,28 +30,44 @@ class _WelcomeUserState extends State<WelcomeUser> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> widgetList = [];
-    widgetList.add(widget.child);
     if (this.widget.show) {
+      List<Widget> widgetList = [];
+      widgetList.add(widget.child);
       Widget welcomeUser;
-      welcomeUser = Center(
+      welcomeUser = Align(
+          alignment: Alignment(0, -0.75),
           child: Container(
-              height: 200,
-              width: 400,
-              //need this due to bug...https://github.com/flutter/flutter/issues/18399
-              child: Align(
-                alignment: Alignment.center,
-                child: Column(
-                  children: <Widget>[
-                    Text("Hello World"),
-                    RaisedButton(
-                      onPressed: () => hideWelcomeWidget(),
-                      child: const Text('Discover the app',
-                          style: TextStyle(fontSize: 20)),
-                    )
-                  ],
+            height: 300,
+            width: 300,
+            margin: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: Colors.blue[50],
+              border: Border.all(
+                width: 5,
+                color: Colors.blue[200],
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Text("Hello World", style: TextStyle(fontSize: 26)),
                 ),
-              )));
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    onPressed: () => hideWelcomeWidget(),
+                    child: const Text('Start', style: TextStyle(fontSize: 26)),
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                  ),
+                )
+              ],
+            ),
+          ));
       final modal = [
         new Opacity(
           child: new ModalBarrier(color: widget.color),
@@ -59,9 +76,10 @@ class _WelcomeUserState extends State<WelcomeUser> {
         welcomeUser
       ];
       widgetList += modal;
+      return new Stack(
+        children: widgetList,
+      );
     }
-    return new Stack(
-      children: widgetList,
-    );
+    return widget.child;
   }
 }
