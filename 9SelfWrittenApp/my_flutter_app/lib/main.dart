@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/ui/widgets/welcomeUser.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
+import 'package:my_flutter_app/ui/screens/userScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,50 +17,11 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/',
+        initialRoute: '/user',
         routes: {
-          '/': (context) => FirstScreen(),
+          '/user': (context) => UserScreen(),
         },
       ),
     );
-  }
-}
-
-class FirstScreen extends StatelessWidget {
-  final AuthService _auth = AuthService();
-
-  @override
-  Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    /*
-    if (user == null) { // First time open the app
-      final AuthService _auth = AuthService();
-      dynamic result = _auth.signInAnon();
-      print(result);
-    }
-    */
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('First Screen'),
-        ),
-        body: WelcomeUser( // Only show up if the user open the app for first time
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                Text(user.toString()),
-                /*
-              RaisedButton(
-              onPressed: () async {
-                await _auth.signOut();
-              },
-              child: Text(
-              'Logout'
-              ),
-            )
-            */
-              ],
-            ),
-          ),
-        ));
   }
 }

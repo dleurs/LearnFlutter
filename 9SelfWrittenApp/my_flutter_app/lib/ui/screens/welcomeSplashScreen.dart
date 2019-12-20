@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+//import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:my_flutter_app/utils/auth.dart';
+
+// Widget to show a Welcome page, in foreground of the user page
 // I need a Stateful Widget, and not a Stateless Widget,
 // because I need the widget to rebuild when this.show is put to false
-class WelcomeUser extends StatefulWidget {
+// e.g. when the user pressed "Start" button
+// After the first time the user pressed start button,
+// this widget will just return widget.child;
+class WelcomeSplashScreen extends StatefulWidget {
   final double opacity;
   final Color color;
   final Widget child;
   bool show;
 
-  WelcomeUser({
+  WelcomeSplashScreen({
     Key key,
     this.opacity = 0.7,
     this.color = Colors.white,
@@ -18,19 +26,38 @@ class WelcomeUser extends StatefulWidget {
         super(key: key);
 
   @override
-  _WelcomeUserState createState() => _WelcomeUserState();
+  _WelcomeSplashScreenState createState() => _WelcomeSplashScreenState();
 }
 
-class _WelcomeUserState extends State<WelcomeUser> {
+class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
+  final AuthService _auth = AuthService();
+
   void hideWelcomeWidget() {
     setState(() {
       this.widget.show = false;
     });
   }
 
+  /*
+  Future<bool> isUserAlreadyOpennedTheApp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _userAlreadyOpennedTheApp =
+        (prefs.getBool('userAlreadyOpennedTheApp') ?? false);
+    if (_userAlreadyOpennedTheApp) {
+      return (true);
+    } else {
+      prefs.setBool('seen', true);
+      return (false);
+    }
+
+    return (_userAlreadyOpennedTheApp);
+  }
+  */
+
   @override
   Widget build(BuildContext context) {
     if (this.widget.show) {
+
       List<Widget> widgetList = [];
       widgetList.add(widget.child);
       Widget welcomeUser;
@@ -59,7 +86,7 @@ class _WelcomeUserState extends State<WelcomeUser> {
                   alignment: Alignment.bottomCenter,
                   child: RaisedButton(
                     padding: const EdgeInsets.all(8.0),
-                    onPressed: () => hideWelcomeWidget(),
+                    onPressed: () => {hideWelcomeWidget()},
                     child: const Text('Start', style: TextStyle(fontSize: 26)),
                     color: Colors.blue,
                     textColor: Colors.white,
