@@ -3,19 +3,18 @@ import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
-import 'package:my_flutter_app/ui/screens/welcomeSplashScreen.dart';
+import 'package:my_flutter_app/ui/screens/welcome-splash-screen.dart';
 
-class UserScreen extends StatelessWidget {
+class TodoScreen extends StatelessWidget {
   final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    bool _loadingVisible = false;
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('First Screen'),
+          title: Text('Todo list'),
         ),
         body: WelcomeSplashScreen(
           // Only show up if the user open the app for first time
