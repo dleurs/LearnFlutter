@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/ui/widgets/base-scaffold.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
@@ -12,10 +13,8 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('User list'),
-      ),
+    return BaseScaffold( // lib/ui/widgets/base-scaffold.dart
+      title: "User List",
       body: Center(
         child: Column(
           children: <Widget>[
