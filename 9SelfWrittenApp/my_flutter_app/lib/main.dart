@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/ui/screens/calendar-screen.dart';
+import 'package:my_flutter_app/ui/screens/group-screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
@@ -34,8 +36,8 @@ class _BaseScaffoldState extends State<BaseScaffold> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     TodoScreen(),
-    TodoScreen(),
-    TodoScreen(),
+    CalendarScreen(),
+    GroupScreen(),
     UserScreen(),
   ];
 
