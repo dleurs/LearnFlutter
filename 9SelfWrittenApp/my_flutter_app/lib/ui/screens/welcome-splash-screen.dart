@@ -31,7 +31,7 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
   Future<bool> _userAlreadyOpenApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _userAlreadyOpenApp = (prefs.getBool('userAlreadyOpenApp') ?? false);
-    print(_userAlreadyOpenApp);
+    //print(_userAlreadyOpenApp);
     if (!_userAlreadyOpenApp) {
       prefs.setBool('userAlreadyOpenApp', true);
       return (false);
@@ -49,8 +49,8 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
           } else if (!snapshot.hasData) {
             return Text("Wait");
           } else if (snapshot.hasData && snapshot.data == false) {
-            print("Snapshot data");
-            print(snapshot.data);
+            //print("Snapshot data");
+            //print(snapshot.data);
             List<Widget> widgetList = [];
             widgetList.add(widget.child);
             Widget welcomeUser;

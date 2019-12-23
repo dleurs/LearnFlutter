@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/ui/widgets/base-scaffold.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
@@ -13,9 +12,7 @@ class TodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    return BaseScaffold( // lib/ui/widgets/base-scaffold.dart
-        title: "Todo List",
-        body: WelcomeSplashScreen(
+    return WelcomeSplashScreen(
           // Only show up something different than child
           // if the user open the app for first time
           child: Center(
@@ -26,6 +23,6 @@ class TodoScreen extends StatelessWidget {
               ],
             ),
           ),
-        ));
+    );
   }
 }
