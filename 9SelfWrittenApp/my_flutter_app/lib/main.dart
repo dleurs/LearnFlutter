@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/ui/screens/calendar-screen.dart';
+import 'package:my_flutter_app/ui/screens/group-screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
 import 'package:my_flutter_app/ui/screens/user-screen.dart';
 import 'package:my_flutter_app/ui/screens/todo-screen.dart';
-import 'package:my_flutter_app/ui/screens/calendar-screen.dart';
-import 'package:my_flutter_app/ui/screens/group-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        debugShowCheckedModeBanner: false,
+        //debugShowCheckedModeBanner: false,
         home: BaseScaffold(),
       ),
     );
@@ -54,30 +54,11 @@ class _BaseScaffoldState extends State<BaseScaffold> {
     });
   }
 
-  void _createTodo() {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text("Hello - Add todo here"),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(_childrenTitle[_currentIndex]),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            color: Colors.white,
-            iconSize: 38.0,
-            onPressed: () => _createTodo(),
-          ),
-        ],
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -87,23 +68,19 @@ class _BaseScaffoldState extends State<BaseScaffold> {
         unselectedItemColor: Colors.grey[700],
         showUnselectedLabels: true,
         items: [
-          BottomNavigationBarItem(
-            // Index 0 : Todo list
+          BottomNavigationBarItem( // Index 0 : Todo list
             icon: Icon(Icons.format_list_bulleted),
             title: Text('Todo'),
           ),
-          BottomNavigationBarItem(
-            // Index 1 : Todo Calendar
+          BottomNavigationBarItem( // Index 1 : Todo Calendar
             icon: Icon(Icons.calendar_today),
             title: Text('Calendar'),
           ),
-          BottomNavigationBarItem(
-            // Index 2 : Groups
+          BottomNavigationBarItem( // Index 2 : Groups
             icon: Icon(Icons.group),
             title: Text('Groups'),
           ),
-          BottomNavigationBarItem(
-            // Index 3 : User
+          BottomNavigationBarItem( // Index 3 : User
             icon: Icon(Icons.assignment_ind),
             title: Text('User'),
           ),
@@ -112,3 +89,46 @@ class _BaseScaffoldState extends State<BaseScaffold> {
     );
   }
 }
+
+
+/* If you want a Navigator Menu, use this code inside AppBar()
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              UserAccountsDrawerHeader(
+                onDetailsPressed: () {
+                  Navigator.pushNamed(context, '/user/');
+                },
+                accountName: Text("Ashish Rawat"),
+                accountEmail: Text("ashishrawat2911@gmail.com"),
+                currentAccountPicture: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/user/');
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: Colors.blue[50],
+                    child: Text(
+                      "A",
+                      style: TextStyle(fontSize: 40.0),
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text("Todo List"),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  Navigator.pushNamed(context, '/todo/');
+                },
+              ),
+              ListTile(
+                title: Text("User"),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () {
+                  Navigator.pushNamed(context, '/user/');
+                },
+              ),
+            ],
+          ),
+        ),
+        */
