@@ -19,7 +19,6 @@ class TodoScreen extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text("Todo List Here"),
-                Text(user.toString()),
               ],
             ),
           ),

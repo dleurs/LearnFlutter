@@ -1,13 +1,15 @@
-//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/utils/loading.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:my_flutter_app/utils/auth.dart';
+import 'package:my_flutter_app/models/user.dart';
 
 // Widget to show a Welcome page, in foreground of the user page
 // I need a Stateful Widget, and not a Stateless Widget,
-// because I need the widget to rebuild when the user pressed "Start" button 
+// because I need the widget to rebuild when the user pressed "Start" button
 // It happen only the first time the user open the app.
 // After the first time the user pressed start button,
 // this widget will just return widget.child;
@@ -25,14 +27,16 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
 
   void reloadWidget() {
     _auth.signInAnon();
-    setState(() {}); // just reload the widget, as prefs.getBool('userAlreadyOpenApp') is now true
+    setState(
+        () {}); // just reload the widget, as prefs.getBool('userAlreadyOpenApp') is now true,
+    // _userAlreadyOpenApp() will return true, and build will
   }
 
   Future<bool> _userAlreadyOpenApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool _userAlreadyOpenApp = (prefs.getBool('userAlreadyOpenApp') ?? false);
-    //print(_userAlreadyOpenApp);
     if (!_userAlreadyOpenApp) {
+      //sleep(Duration(seconds: 10));
       prefs.setBool('userAlreadyOpenApp', true);
       return (false);
     }
@@ -45,12 +49,10 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
         future: _userAlreadyOpenApp(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text("Error");
+            return Text("Error loading file on the app");
           } else if (!snapshot.hasData) {
-            return Text("Wait");
+            return Loading();
           } else if (snapshot.hasData && snapshot.data == false) {
-            //print("Snapshot data");
-            //print(snapshot.data);
             List<Widget> widgetList = [];
             widgetList.add(widget.child);
             Widget welcomeUser;
