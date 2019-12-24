@@ -36,8 +36,8 @@ class _BaseScaffoldState extends State<BaseScaffold> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     TodoScreen(),
-    CalendarScreen(),
-    GroupScreen(),
+    TodoScreen(),
+    TodoScreen(),
     UserScreen(),
   ];
 
