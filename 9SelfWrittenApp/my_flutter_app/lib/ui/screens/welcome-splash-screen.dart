@@ -24,7 +24,7 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
   final AuthService _auth = AuthService();
 
   void reloadWidget() {
-    _auth.signInAnon();
+    _auth.signInAnon(); // could not place this function in _userAlreadyOpenApp()
     setState(() {}); // just reload the widget, as prefs.getBool('userAlreadyOpenApp') is now true
   }
 
