@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/ui/screens/welcome-splash-screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/ui/screens/calendar-screen.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //debugShowCheckedModeBanner: false,
-        home: BaseScaffold(),
+        home: WelcomeSplashScreen(child: BaseScaffold()),
       ),
     );
   }
@@ -95,7 +96,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
         onTap: onTabTapped,
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey[700],
-        showUnselectedLabels: true,
+        //showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
             // Index 0 : Todo list

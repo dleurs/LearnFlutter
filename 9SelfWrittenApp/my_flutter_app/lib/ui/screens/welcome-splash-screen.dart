@@ -1,13 +1,15 @@
 //import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:my_flutter_app/utils/auth.dart';
+import 'package:my_flutter_app/utils/loading.dart';
 
 // Widget to show a Welcome page, in foreground of the user page
 // I need a Stateful Widget, and not a Stateless Widget,
-// because I need the widget to rebuild when the user pressed "Start" button 
+// because I need the widget to rebuild when the user pressed "Start" button
 // It happen only the first time the user open the app.
 // After the first time the user pressed start button,
 // this widget will just return widget.child;
@@ -24,8 +26,10 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
   final AuthService _auth = AuthService();
 
   void reloadWidget() {
-    _auth.signInAnon(); // could not place this function in _userAlreadyOpenApp()
-    setState(() {}); // just reload the widget, as prefs.getBool('userAlreadyOpenApp') is now true
+    _auth
+        .signInAnon(); // could not place this function in _userAlreadyOpenApp()
+    setState(
+        () {}); // just reload the widget, as prefs.getBool('userAlreadyOpenApp') is now true
   }
 
   Future<bool> _userAlreadyOpenApp() async {
@@ -47,49 +51,59 @@ class _WelcomeSplashScreenState extends State<WelcomeSplashScreen> {
           if (snapshot.hasError) {
             return Text("Error");
           } else if (!snapshot.hasData) {
-            return Text("Wait");
+            return Loading();
           } else if (snapshot.hasData && snapshot.data == false) {
             //print("Snapshot data");
             //print(snapshot.data);
             List<Widget> widgetList = [];
             widgetList.add(widget.child);
+            //sleep(Duration(seconds:10 ));
             Widget welcomeUser;
-            welcomeUser = Align(
-                alignment: Alignment(0, -0.75),
-                child: Container(
-                  height: 300,
-                  width: 300,
-                  margin: const EdgeInsets.all(30.0),
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    border: Border.all(
-                      width: 5,
-                      color: Colors.blue[200],
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
-                  child: Stack(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child:
-                            Text("Hello World", style: TextStyle(fontSize: 26)),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: RaisedButton(
-                          padding: const EdgeInsets.all(8.0),
-                          onPressed: () => {reloadWidget()},
-                          child: const Text('Start',
-                              style: TextStyle(fontSize: 26)),
-                          color: Colors.blue,
-                          textColor: Colors.white,
+
+            welcomeUser = Material(
+                type: MaterialType.transparency,
+                child: Align(
+                    alignment: Alignment(0, -0.60),
+                    child: Container(
+                      height: 300,
+                      width: 300,
+                      margin: const EdgeInsets.all(30.0),
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        border: Border.all(
+                          width: 4,
+                          color: Colors.blue[200],
                         ),
-                      )
-                    ],
-                  ),
-                ));
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                      child: Stack(
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "Hello World",
+                              style: TextStyle(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 28.0,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.none),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: RaisedButton(
+                              padding: const EdgeInsets.all(8.0),
+                              onPressed: () => {reloadWidget()},
+                              child: const Text('Start',
+                                  style: TextStyle(fontSize: 26)),
+                              color: Colors.blue,
+                              textColor: Colors.white,
+                            ),
+                          )
+                        ],
+                      ),
+                    )));
             final modal = [
               new Opacity(
                 child: new ModalBarrier(color: Colors.white),
