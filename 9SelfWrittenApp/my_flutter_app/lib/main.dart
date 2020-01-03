@@ -87,10 +87,23 @@ class _BaseScaffoldState extends State<BaseScaffold> {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          return Container(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-            child: Text("Hello - Add todo here"),
-          );
+          final user = Provider.of<User>(context);
+          if (user == null) {
+            return Text("You should be connected");
+          } else {
+            return Form(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                    child: Text("Hello - Add todo here"),
+                  ),
+                  Text(user.toString()),
+                ],
+              ),
+            );
+          }
         });
   }
 

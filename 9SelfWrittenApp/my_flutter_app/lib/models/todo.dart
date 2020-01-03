@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 
 class Todo {
 
-  String _name;
-  String _creatorUid;
-  bool _isDone;
+  String name;
+  String creatorUid;
+  String description;
+  bool isDone;
 
-  Todo({@required name,@required creatorUid, isDone }) {
-    this._name = name;
-    this._creatorUid = creatorUid;
-    this._isDone = isDone ?? false;
+  Todo({@required name,@required creatorUid, description, isDone }) {
+    this.name = name;
+    this.creatorUid = creatorUid;
+    this.isDone = isDone ?? false;
+    this.description = description ?? null;
   }
 
 }
