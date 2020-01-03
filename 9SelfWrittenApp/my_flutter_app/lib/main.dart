@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/ui/screens/settings-screen.dart';
-import 'package:my_flutter_app/utils/loading.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:my_flutter_app/ui/screens/calendar-screen.dart';
-import 'package:my_flutter_app/ui/screens/group-screen.dart';
 import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
 import 'package:my_flutter_app/ui/screens/user-screen.dart';
-import 'package:my_flutter_app/ui/screens/todo-screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:my_flutter_app/ui/screens/todos-screen.dart';
+import 'package:my_flutter_app/ui/screens/friends-screen.dart';
+import 'package:my_flutter_app/ui/screens/todo-groups-screen.dart';
+import 'package:my_flutter_app/utils/loading.dart';
 
 void main() => runApp(MyApp());
 
@@ -62,19 +62,19 @@ class BaseScaffold extends StatefulWidget {
 class _BaseScaffoldState extends State<BaseScaffold> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    TodoScreen(),
+    TodosScreen(),
+    TodoGroupsScreen(),
     CalendarScreen(),
-    GroupScreen(),
+    FriendsScreen(),
     UserScreen(),
-    SettingsScreen(),
   ];
 
   final List<String> _childrenTitle = [
-    "Todo",
+    "Todos",
+    "Todo groups",
     "Calendar",
-    "Groups",
+    "Friends",
     "User",
-    "Settings",
   ];
 
   void onTabTapped(int index) {
@@ -135,9 +135,14 @@ class _BaseScaffoldState extends State<BaseScaffold> {
         //showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
-            // Index 0 : Todo list
+            // Index 0 : Todo 
             icon: Icon(Icons.format_list_bulleted),
-            title: Text('Todo'),
+            title: Text('Todos'),
+          ),
+          BottomNavigationBarItem(
+            // Index 1 : Todo Group
+            icon: Icon(Icons.view_agenda),
+            title: Text('Todo Groups'),
           ),
           BottomNavigationBarItem(
             // Index 1 : Todo Calendar
@@ -147,7 +152,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
           BottomNavigationBarItem(
             // Index 2 : Groups
             icon: Icon(Icons.group),
-            title: Text('Groups'),
+            title: Text('Friends'),
           ),
           BottomNavigationBarItem(
             // Index 3 : User

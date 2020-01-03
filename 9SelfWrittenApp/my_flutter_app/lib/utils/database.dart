@@ -3,10 +3,7 @@ import 'package:my_flutter_app/models/todo.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
-
-  final CollectionReference todoCollection =
-      Firestore.instance.collection('todos');
+  DatabaseService({this.uid});  
 
   List<Todo> _todoListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.documents.map((doc) {
@@ -20,7 +17,7 @@ class DatabaseService {
     }).toList();
   }
 
-  Stream<List<Todo>> get todos {
-    return todoCollection.snapshots().map(_todoListFromSnapshot);
+  Stream<List<Todo>> todosDefaultTodoGroupUser(String userUid) {
+    return Firestore.instance.collection('todoGroups').document(userUid).collection('todos').snapshots().map(_todoListFromSnapshot);
   }
 }

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/models/user.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/todo.dart';
 import 'package:my_flutter_app/utils/database.dart';
 
-class TodoScreen extends StatelessWidget {
+class TodosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return StreamProvider<List<Todo>>.value(
-      value: DatabaseService().todos,
+      value: DatabaseService().todosDefaultTodoGroupUser(user.uid),
       child: TodoList(),
     );
   }
@@ -47,7 +49,7 @@ class TodoTile extends StatelessWidget {
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           title: Text(todo.name),
-          subtitle: Text(todo.description),
+          subtitle: todo.description != null ? Text(todo.description) : null,
         ),
       ),
     );
