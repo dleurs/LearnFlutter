@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_flutter_app/ui/screens/welcome-splash-screen.dart';
+import 'package:my_flutter_app/ui/screens/settings-screen.dart';
+import 'package:my_flutter_app/utils/loading.dart';
 import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/ui/screens/calendar-screen.dart';
@@ -8,10 +9,22 @@ import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
 import 'package:my_flutter_app/ui/screens/user-screen.dart';
 import 'package:my_flutter_app/ui/screens/todo-screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  //final AuthService _auth = AuthService();
+
+  Future<bool> _userAlreadyOpenApp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _userAlreadyOpenApp = (prefs.getBool('userAlreadyOpenApp') ?? false);
+    if (!_userAlreadyOpenApp) {
+      prefs.setBool('userAlreadyOpenApp', true);
+    }
+    return (_userAlreadyOpenApp);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
@@ -22,7 +35,20 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         //debugShowCheckedModeBanner: false,
-        home: WelcomeSplashScreen(child: BaseScaffold()),
+        home: FutureBuilder<bool>(
+            future: _userAlreadyOpenApp(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text("Error - return function userAlreadyOpenApp");
+              } else if (!snapshot.hasData) {
+                return Loading();
+              } else if (snapshot.hasData && snapshot.data == false) {
+                AuthService().signInAnon();
+                return BaseScaffold();
+              } else {
+                return BaseScaffold();
+              }
+            }),
       ),
     );
   }
@@ -40,6 +66,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
     CalendarScreen(),
     GroupScreen(),
     UserScreen(),
+    SettingsScreen(),
   ];
 
   final List<String> _childrenTitle = [
@@ -47,6 +74,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
     "Calendar",
     "Groups",
     "User",
+    "Settings",
   ];
 
   void onTabTapped(int index) {
@@ -71,22 +99,17 @@ class _BaseScaffoldState extends State<BaseScaffold> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_childrenTitle[_currentIndex]),
+        leading: IconButton(
+          icon: Icon(Icons.search),
+          iconSize: 32.0,
+          onPressed: () {},
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
             color: Colors.white,
             iconSize: 38.0,
             onPressed: () => createTodo(),
-          ),
-          IconButton(
-            icon: Icon(Icons.search),
-            iconSize: 32.0,
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: null,
-              );
-            },
           ),
         ],
       ),
@@ -120,6 +143,11 @@ class _BaseScaffoldState extends State<BaseScaffold> {
           ),
         ],
       ),
+      /*floatingActionButton: FloatingActionButton(
+        onPressed: () => createTodo(),
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),*/
     );
   }
 }
