@@ -19,8 +19,12 @@ class TodosScreen extends StatelessWidget {
 class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final todoList = Provider.of<List<Todo>>(context) ?? [];
-    if (todoList.length == 0) {
+    
+    final todos = Provider.of<List<Todo>>(context) ?? [];
+    todos.insert(0, null); // to add a title
+    // it is not possible to add ListTile here because todos is composed of Todo
+
+    if (todos.length == 0) {
       return Center(
           child: Text("No todo yet",
               style: TextStyle(
@@ -28,9 +32,18 @@ class TodoList extends StatelessWidget {
               )));
     } else {
       return ListView.builder(
-        itemCount: todoList.length,
+        itemCount: todos.length,
         itemBuilder: (context, index) {
-          return TodoTile(todo: todoList[index]);
+          if (index == 0) { // to add a title
+            return ListTile(
+              title: Text(
+                "Your default todo list",
+                //style: Theme.of(context).textTheme.headline,
+              ),
+            );
+          } else {
+            return TodoTile(todo: todos[index]);
+          }
         },
       );
     }
@@ -43,14 +56,11 @@ class TodoTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: Card(
-        margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
-        child: ListTile(
-          title: Text(todo.name),
-          subtitle: todo.description != null ? Text(todo.description) : null,
-        ),
+    return Card(
+      margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+      child: ListTile(
+        title: Text(todo.name),
+        subtitle: todo.description != null ? Text(todo.description) : null,
       ),
     );
   }
