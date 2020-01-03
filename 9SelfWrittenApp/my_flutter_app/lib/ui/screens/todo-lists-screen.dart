@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:my_flutter_app/models/user.dart';
 
-class TodoGroupsScreen extends StatelessWidget {
+class TodoListsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

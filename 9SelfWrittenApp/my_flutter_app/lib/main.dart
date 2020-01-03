@@ -7,8 +7,8 @@ import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
 import 'package:my_flutter_app/ui/screens/user-screen.dart';
 import 'package:my_flutter_app/ui/screens/todos-screen.dart';
-import 'package:my_flutter_app/ui/screens/friends-screen.dart';
-import 'package:my_flutter_app/ui/screens/todo-groups-screen.dart';
+import 'package:my_flutter_app/ui/screens/groups-screen.dart';
+import 'package:my_flutter_app/ui/screens/todo-lists-screen.dart';
 import 'package:my_flutter_app/utils/loading.dart';
 
 void main() => runApp(MyApp());
@@ -63,16 +63,16 @@ class _BaseScaffoldState extends State<BaseScaffold> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     TodosScreen(),
-    TodoGroupsScreen(),
     CalendarScreen(),
-    FriendsScreen(),
+    TodoListsScreen(),
+    GroupsScreen(),
     UserScreen(),
   ];
 
   final List<String> _childrenTitle = [
     "Todos",
-    "Todo groups",
     "Calendar",
+    "Todo groups",
     "Friends",
     "User",
   ];
@@ -135,14 +135,9 @@ class _BaseScaffoldState extends State<BaseScaffold> {
         //showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
-            // Index 0 : Todo 
+            // Index 0 : Todo
             icon: Icon(Icons.format_list_bulleted),
             title: Text('Todos'),
-          ),
-          BottomNavigationBarItem(
-            // Index 1 : Todo Group
-            icon: Icon(Icons.view_agenda),
-            title: Text('Todo Groups'),
           ),
           BottomNavigationBarItem(
             // Index 1 : Todo Calendar
@@ -150,12 +145,17 @@ class _BaseScaffoldState extends State<BaseScaffold> {
             title: Text('Calendar'),
           ),
           BottomNavigationBarItem(
-            // Index 2 : Groups
-            icon: Icon(Icons.group),
-            title: Text('Friends'),
+            // Index 2 : Todo Group
+            icon: Icon(Icons.view_agenda),
+            title: Text('Todo Lists'),
           ),
           BottomNavigationBarItem(
-            // Index 3 : User
+            // Index 3 : Friends
+            icon: Icon(Icons.group),
+            title: Text('Groups'),
+          ),
+          BottomNavigationBarItem(
+            // Index 4 : User
             icon: Icon(Icons.assignment_ind),
             title: Text('User'),
           ),

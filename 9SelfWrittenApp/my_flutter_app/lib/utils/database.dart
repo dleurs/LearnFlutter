@@ -12,12 +12,12 @@ class DatabaseService {
         name: doc.data['name'] ?? 'No name',
         description: doc.data['description'] ?? null,
         creatorUid: doc.data['creatorUid'] ?? 'No creator',
-        isDone: doc.data['isDone'] ?? null,
+        isDone: doc.data['isDone'] ?? false,
       );
     }).toList();
   }
 
   Stream<List<Todo>> todosDefaultTodoGroupUser(String userUid) {
-    return Firestore.instance.collection('todoGroups').document(userUid).collection('todos').snapshots().map(_todoListFromSnapshot);
+    return Firestore.instance.collection('todoLists').document(userUid).collection('todos').snapshots().map(_todoListFromSnapshot);
   }
 }
