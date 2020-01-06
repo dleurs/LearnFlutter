@@ -10,7 +10,7 @@ class TodosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamProvider<List<Todo>>.value(
-      value: DatabaseService().todosDefaultTodoGroupUser(user.uid),
+      value: DatabaseService().todosFromDefaultTodoList(user.uid),
       child: TodoList(),
     );
   }
@@ -19,12 +19,11 @@ class TodosScreen extends StatelessWidget {
 class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     final todos = Provider.of<List<Todo>>(context) ?? [];
     todos.insert(0, null); // to add a title
     // it is not possible to add ListTile here because todos is composed of Todo
 
-    if (todos.length == 0) {
+    if (todos.length == 1) { /// 0 + 1 for title
       return Center(
           child: Text("No todo yet",
               style: TextStyle(
@@ -34,11 +33,14 @@ class TodoList extends StatelessWidget {
       return ListView.builder(
         itemCount: todos.length,
         itemBuilder: (context, index) {
-          if (index == 0) { // to add a title
+          if (index == 0) {
+            // to add a title
             return ListTile(
-              title: Text(
-                "Your default todo list",
-                //style: Theme.of(context).textTheme.headline,
+              title: Center(
+                child: Text(
+                  "Your default todo list",
+                  //style: Theme.of(context).textTheme.headline,
+                ),
               ),
             );
           } else {
@@ -60,7 +62,11 @@ class TodoTile extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
       child: ListTile(
         title: Text(todo.name),
-        subtitle: todo.description != null ? Text(todo.description) : null,
+        subtitle: todo.description != null
+            ? (todo.description.length > 40)
+                ? Text(todo.description.substring(0, 40) + "...")
+                : Text(todo.description)
+            : null,
       ),
     );
   }

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               } else if (!snapshot.hasData) {
                 return Loading();
               } else if (snapshot.hasData && snapshot.data == false) {
-                AuthService().signInAnon();
+                AuthService().signInAnonymous();
                 return BaseScaffold();
               } else {
                 return BaseScaffold();

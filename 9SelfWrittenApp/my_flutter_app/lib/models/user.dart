@@ -2,23 +2,28 @@ import 'package:flutter/foundation.dart';
 
 class User {
   final String uid;
-  bool _isAnonymous;
-  String _username;
+  String _pseudo;
   String _email;
 
-  User({@required this.uid, String username, String email}) {
-    this._isAnonymous = false;
-    this._username = username;
-    this._email = email;
+  User({@required this.uid});
+
+  bool get isAnonymous => (_pseudo == null && _email == null);
+
+  set pseudo(String pseudo) {
+    this.pseudo = pseudo;
+  } 
+
+  set email(String email) {
+    this.email = email;
+  } 
+
+  String toString() {
+    String res = "uid: ${this.uid}";
+    if (this.isAnonymous) {
+      res += ", anonymous user";
+    } else {
+      res += ", pseudo: ${this._pseudo}, email: ${this._email}";
+    }
+    return res;
   }
-
-  User.anonymous({@required this.uid}) {
-    this._isAnonymous = true;
-    this._username = null;
-    this._email = null;
-  }
-
-  bool get isAnon => _isAnonymous;
-
-  String toString() => "uid: ${this.uid}";
 }
