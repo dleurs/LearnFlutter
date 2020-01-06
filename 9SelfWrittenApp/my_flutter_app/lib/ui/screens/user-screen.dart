@@ -32,7 +32,7 @@ class _UserScreenState extends State<UserScreen> {
         child: Text("Hello"),
       ));
 
-      if (user!= null && user.isAnonymous) {
+      if (user != null && user.isAnonymous) {
         builder.add(Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
           child: Text("Anonymous user",
@@ -78,18 +78,20 @@ class _UserScreenState extends State<UserScreen> {
         ));
       }
 
-      builder.add(FlatButton(
-        onPressed: () => _switchRegisterSignIn(),
-        child: register0SignIn1
-            ? Text(
-                'Don\'t have an account ? Register',
-                style: TextStyle(color: Colors.black54),
-              )
-            : Text(
-                'Have an Account ? Sign In',
-                style: TextStyle(color: Colors.black54),
-              ),
-      ));
+      if (user == null || user.isAnonymous) {
+        builder.add(FlatButton(
+          onPressed: () => _switchRegisterSignIn(),
+          child: register0SignIn1
+              ? Text(
+                  'Don\'t have an account ? Register',
+                  style: TextStyle(color: Colors.black54),
+                )
+              : Text(
+                  'Have an Account ? Sign In',
+                  style: TextStyle(color: Colors.black54),
+                ),
+        ));
+      }
 
       builder.add(Text(
         user.toString(),
