@@ -10,7 +10,7 @@ class TodosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamProvider<List<Todo>>.value(
-      value: DatabaseService().todosFromDefaultTodoList(user.uid),
+      value: user != null ? DatabaseService().todosFromDefaultTodoList(user.uid) : null,
       child: TodoList(),
     );
   }

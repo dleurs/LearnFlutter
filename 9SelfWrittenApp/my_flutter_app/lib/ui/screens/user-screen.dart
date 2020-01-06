@@ -32,7 +32,7 @@ class _UserScreenState extends State<UserScreen> {
         child: Text("Hello"),
       ));
 
-      if (user.isAnonymous) {
+      if (user!= null && user.isAnonymous) {
         builder.add(Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
           child: Text("Anonymous user",
@@ -40,7 +40,16 @@ class _UserScreenState extends State<UserScreen> {
                 fontSize: 24.0,
               )),
         ));
-      } else {
+      } else if (user == null) {
+        builder.add(Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+          child: Text("You are not connected",
+              style: TextStyle(
+                fontSize: 24.0,
+              )),
+        ));
+      } else // user is logging with email and pseudo
+      {
         builder.add(Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
           child: Text(user.pseudo,

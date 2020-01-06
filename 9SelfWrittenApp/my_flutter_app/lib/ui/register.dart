@@ -134,7 +134,7 @@ class _RegisterState extends State<Register> {
       try {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
         //need await so it has chance to go through error if found.
-        if (user.isAnonymous) {
+        if (user != null && user.isAnonymous) { // user != null should implies here that user.isAnonymous
           print("Anonymous user convert email");
           await AuthService.convertFromAnonToEmail(
               pseudo: pseudo, email: email, password: password);

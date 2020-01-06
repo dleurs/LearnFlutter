@@ -8,9 +8,12 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User _userFromFirebaseUser(FirebaseUser user) {
+    if (user == null) {
+      return null;
+    }
     User userUser = User(uid: user.uid);
     userUser.updateUser();
-    return user != null ? userUser : null;
+    return userUser;
   }
 
   Stream<User> get user {
