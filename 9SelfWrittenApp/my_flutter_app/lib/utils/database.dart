@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:my_flutter_app/models/todo.dart';
+import 'package:my_flutter_app/models/user.dart';
 
 class DatabaseService {
   final String uid;
@@ -29,6 +30,19 @@ class DatabaseService {
       });
     }
     //FirebaseAuth
+  }
+
+  Future<Map<String, dynamic>> getUserFirestore() async {
+    if (uid != null) {
+      return Firestore.instance
+          .collection('users')
+          .document(uid)
+          .get()
+          .then((documentSnapshot) => documentSnapshot.data);
+    } else {
+      print('firestore user uid can not be null');
+      return null;
+    }
   }
 
   List<Todo> _todoListFromSnapshot(QuerySnapshot snapshot) {

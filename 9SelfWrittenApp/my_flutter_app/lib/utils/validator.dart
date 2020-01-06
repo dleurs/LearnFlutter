@@ -21,7 +21,7 @@ class Validator {
     Pattern pattern = r"^[a-zA-Z0-9]{4,15}$";
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Pseudo must be letters and numbers, 4 to 15 characters.';
+      return 'Pseudo must be letters and numbers, 4 to 15.';
     else
       return null;
   }
