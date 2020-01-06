@@ -10,7 +10,7 @@ class TodosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     return StreamProvider<List<Todo>>.value(
-      value: DatabaseService().todosDefaultTodoGroupUser(user.uid),
+      value: DatabaseService().todosDefaultTodoListUser(user.uid),
       child: TodoList(),
     );
   }
@@ -19,7 +19,6 @@ class TodosScreen extends StatelessWidget {
 class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     final todos = Provider.of<List<Todo>>(context) ?? [];
     todos.insert(0, null); // to add a title
     // it is not possible to add ListTile here because todos is composed of Todo
@@ -34,11 +33,14 @@ class TodoList extends StatelessWidget {
       return ListView.builder(
         itemCount: todos.length,
         itemBuilder: (context, index) {
-          if (index == 0) { // to add a title
+          if (index == 0) {
+            // to add a title
             return ListTile(
-              title: Text(
-                "Your default todo list",
-                //style: Theme.of(context).textTheme.headline,
+              //contentPadding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+              title: Center(
+                child: Text(
+                  "Your default todo list",
+                ),
               ),
             );
           } else {
@@ -59,8 +61,13 @@ class TodoTile extends StatelessWidget {
     return Card(
       margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
       child: ListTile(
+        trailing: Text("Ok"),
         title: Text(todo.name),
-        subtitle: todo.description != null ? Text(todo.description) : null,
+        subtitle: todo.description != null
+            ? (todo.description.length > 25)
+                ? Text(todo.description.substring(0, 25))
+                : Text(todo.description)
+            : null,
       ),
     );
   }

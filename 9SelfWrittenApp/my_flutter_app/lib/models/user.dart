@@ -1,24 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class User {
   final String uid;
-  bool _isAnonymous;
-  String _username;
+  String _pseudo;
   String _email;
 
-  User({@required this.uid, String username, String email}) {
-    this._isAnonymous = false;
-    this._username = username;
+  User({@required this.uid, String pseudo, String email}) {
+    this._pseudo = pseudo;
     this._email = email;
   }
 
   User.anonymous({@required this.uid}) {
-    this._isAnonymous = true;
-    this._username = null;
+    this._pseudo = null;
     this._email = null;
   }
 
-  bool get isAnon => _isAnonymous;
+  factory User.fromDocument({DocumentSnapshot docUser}) => new User(
+        uid: docUser.data["uid"],
+        pseudo: docUser.data["pseudo"],
+        email: docUser.data["email"],
+      );
 
-  String toString() => "uid: ${this.uid}";
+  bool get isAnonymous => (_pseudo == null && _email == null);
+  String get pseudo => _pseudo;
+
+  String toString() {
+    String res = "";
+    res += "uid: ${this.uid}";
+    if (this.isAnonymous) {
+      res += ", anonymous user";
+    } else {
+      res += ", pseudo: ${this._pseudo}, email: ${this._email}";
+    }
+    return res;
+  }
 }

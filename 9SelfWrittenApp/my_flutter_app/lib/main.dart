@@ -27,14 +27,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
+    return StreamProvider<Future<User>>.value(
       value: AuthService().user,
       child: MaterialApp(
         title: 'My Flutter App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        //debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         home: FutureBuilder<bool>(
             future: _userAlreadyOpenApp(),
             builder: (context, snapshot) {
