@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_flutter_app/models/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,12 +10,12 @@ import 'package:my_flutter_app/ui/screens/user-screen.dart';
 import 'package:my_flutter_app/ui/screens/todos-screen.dart';
 import 'package:my_flutter_app/ui/screens/groups-screen.dart';
 import 'package:my_flutter_app/ui/screens/todo-lists-screen.dart';
-import 'package:my_flutter_app/utils/loading.dart';
+import 'package:my_flutter_app/utils/loading-ui.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  //final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   Future<bool> _userAlreadyOpenApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -27,8 +28,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(
+          value: _auth.user,
+        ),
+        ChangeNotifierProvider<Loading>(create: (context) => Loading()),
+      ],
       child: MaterialApp(
         title: 'My Flutter App',
         theme: ThemeData(
@@ -41,9 +47,9 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasError) {
                 return Text("Error - return function userAlreadyOpenApp");
               } else if (!snapshot.hasData) {
-                return Loading();
+                return LoadingNoModalBarrier();
               } else if (snapshot.hasData && snapshot.data == false) {
-                AuthService().signInAnonymous();
+                _auth.signInAnonymous();
                 return BaseScaffold();
               } else {
                 return BaseScaffold();
@@ -61,6 +67,7 @@ class BaseScaffold extends StatefulWidget {
 
 class _BaseScaffoldState extends State<BaseScaffold> {
   int _currentIndex = 0;
+
   final List<Widget> _children = [
     TodosScreen(),
     CalendarScreen(),
@@ -72,7 +79,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
   final List<String> _childrenTitle = [
     "Todos",
     "Calendar",
-    "Todo groups",
+    "Todo lists",
     "Friends",
     "User",
   ];

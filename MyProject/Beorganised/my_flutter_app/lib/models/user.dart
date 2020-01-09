@@ -5,15 +5,13 @@ import 'package:my_flutter_app/utils/database.dart';
 
 class User {
   final String uid;
-  String _pseudo;
-  String _email;
+  String pseudo;
+  String email;
 
   User({@required this.uid});
 
-  bool get isAnonymous => (_pseudo == null && _email == null);
+  bool get isAnonymous => (pseudo == null && email == null);
 
-  String get pseudo => _pseudo;
-  String get email => _email;
 
   set pseudo(String pseudo) {
     this.pseudo = pseudo;
@@ -26,8 +24,8 @@ class User {
   Future updateUser() async {
     Map<String, dynamic> dataUserFirestore = await DatabaseService(uid:uid).getUserFirestore();
     print(dataUserFirestore);
-    this._pseudo = dataUserFirestore["pseudo"] ?? null;
-    this._email =  dataUserFirestore["email"] ?? null;
+    this.pseudo = dataUserFirestore["pseudo"] ?? null;
+    this.email =  dataUserFirestore["email"] ?? null;
   }
 
   String toString() {
@@ -35,7 +33,7 @@ class User {
     if (this.isAnonymous) {
       res += ", anonymous user";
     } else {
-      res += ", pseudo: ${this._pseudo}, email: ${this._email}";
+      res += ", pseudo: ${this.pseudo}, email: ${this.email}";
     }
     return res;
   }

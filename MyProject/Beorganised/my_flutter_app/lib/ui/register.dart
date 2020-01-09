@@ -1,5 +1,7 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_flutter_app/models/loading.dart';
 import 'package:my_flutter_app/utils/auth.dart';
 import 'package:my_flutter_app/utils/validator.dart';
 
@@ -13,7 +15,6 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool loading = false;
   final TextEditingController _pseudo = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
@@ -21,6 +22,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
+    final loading = Provider.of<Loading>(context);
 
     final pseudo = TextFormField(
       autofocus: false,
@@ -88,6 +90,7 @@ class _RegisterState extends State<Register> {
         onPressed: () {
           _emailSignUp(
               user: user,
+              loading: loading,
               pseudo: _pseudo.text,
               email: _email.text,
               password: _password.text,
@@ -126,6 +129,7 @@ class _RegisterState extends State<Register> {
 
   void _emailSignUp(
       {User user,
+      Loading loading,
       String pseudo,
       String email,
       String password,
@@ -134,6 +138,7 @@ class _RegisterState extends State<Register> {
       try {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
         //need await so it has chance to go through error if found.
+        loading.switchLoading();
         if (user != null && user.isAnonymous) { // user != null should implies here that user.isAnonymous
           print("Anonymous user convert email");
           await AuthService.convertFromAnonToEmail(
@@ -143,10 +148,21 @@ class _RegisterState extends State<Register> {
           print("No anonymous user create account");
           await AuthService.registerWithEmail(
               pseudo: pseudo, email: email, password: password);
-          user.updateUser();
+            print("ok");
+          //user.updateUser();
         }
+        loading.switchLoading();
       } catch (e) {
+        loading.switchLoading();
+        print("ok");
         print("Sign Up Error: $e");
+        String exception = AuthService.getExceptionText(e);
+        print(exception);
+        Flushbar(
+          title: "Sign Up Error",
+          message: exception,
+          duration: Duration(seconds: 5),
+        )..show(context);
         //String exception = AuthService.getExceptionText(e);
       }
     }

@@ -18,10 +18,10 @@ class Validator {
   }
 
   static String validatePseudo(String value) {
-    Pattern pattern = r"^[a-zA-Z0-9]{4,15}$";
+    Pattern pattern = r"^[a-zA-Z0-9]{1,14}$";
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
-      return 'Pseudo must be letters and numbers, 4 to 15.';
+      return 'Pseudo must be letters and numbers, 1 to 14.';
     else
       return null;
   }

@@ -12,7 +12,7 @@ class TodoListsScreen extends StatelessWidget {
     return Center(
       child: Column(
         children: <Widget>[
-          Text("Todo Group"),
+          Text("Todo lists"),
         ],
       ),
     );
