@@ -12,15 +12,6 @@ class User {
 
   bool get isAnonymous => (pseudo == null && email == null);
 
-
-  set pseudo(String pseudo) {
-    this.pseudo = pseudo;
-  }
-
-  set email(String email) {
-    this.email = email;
-  }
-
   Future updateUser() async {
     Map<String, dynamic> dataUserFirestore = await DatabaseService(uid:uid).getUserFirestore();
     print(dataUserFirestore);
