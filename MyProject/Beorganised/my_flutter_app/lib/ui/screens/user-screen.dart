@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/models/loading.dart';
 import 'package:my_flutter_app/ui/register.dart';
+import 'package:my_flutter_app/ui/sign_in.dart';
 import 'package:my_flutter_app/utils/loading-ui.dart';
 import 'package:provider/provider.dart';
 
@@ -31,20 +32,38 @@ class _UserScreenState extends State<UserScreen> {
     List<Widget> buildMenu() {
       List<Widget> builder = [];
 
-      if (user != null && user.isAnonymous) {
+      if (user != null) {
         builder.add(Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 0.0),
           child: Text("Hello"),
         ));
-
-        builder.add(Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-          child: Text("Anonymous user",
-              style: TextStyle(
-                fontSize: 24.0,
-              )),
+        if (user.databaseUserInfoLoaded) {
+          if (user.isAnonymous) {
+            builder.add(Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              child: Text("Anonymous user",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  )),
+            ));
+          } else {
+            // user is logging with email and pseudo
+            builder.add(Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
+              child: Text(user.pseudo,
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  )),
+            ));
+          }
+        }
+        builder.add(RaisedButton(
+          onPressed: () async {
+            await _auth.signOut();
+          },
+          child: Text('Logout'),
         ));
-      } else if (user == null) {
+      } else {
         builder.add(Padding(
           padding: const EdgeInsets.fromLTRB(8.0, 18.0, 8.0, 8.0),
           child: Text("You are not connected",
@@ -52,38 +71,24 @@ class _UserScreenState extends State<UserScreen> {
                 fontSize: 20.0,
               )),
         ));
-      } else // user is logging with email and pseudo
-      {
-        builder.add(Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 0.0),
-          child: Text("Hello"),
-        ));
-        builder.add(Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 8.0),
-          child: Text(user.pseudo,
-              style: TextStyle(
-                fontSize: 24.0,
-              )),
-        ));
       }
 
-      if (user == null || user.isAnonymous) {
+      if (user == null || (user.databaseUserInfoLoaded && user.isAnonymous)) {
         if (!register0SignIn1) {
+          // if in Register mode5
           builder.add(Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
             child: Text("Register now :"),
           ));
           builder.add(Register());
+        } else {
+          // if in Sign in mode
+          builder.add(Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 30.0, 8.0, 8.0),
+            child: Text("Sign in now :"),
+          ));
+          builder.add(SignIn());
         }
-      }
-
-      if (user != null && !user.isAnonymous) {
-        builder.add(RaisedButton(
-          onPressed: () async {
-            await _auth.signOut();
-          },
-          child: Text('Logout'),
-        ));
       }
 
       if (user == null || user.isAnonymous) {

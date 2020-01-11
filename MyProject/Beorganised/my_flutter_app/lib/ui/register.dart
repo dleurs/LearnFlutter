@@ -117,7 +117,6 @@ class _RegisterState extends State<Register> {
                 email,
                 SizedBox(height: 24.0),
                 password,
-                SizedBox(height: 12.0),
                 signUpButton,
               ],
             ),
@@ -135,10 +134,10 @@ class _RegisterState extends State<Register> {
       String password,
       BuildContext context}) async {
     if (_formKey.currentState.validate()) {
+      loading.switchLoading();
       try {
         SystemChannels.textInput.invokeMethod('TextInput.hide');
         //need await so it has chance to go through error if found.
-        loading.switchLoading();
         if (user != null && user.isAnonymous) { // user != null should implies here that user.isAnonymous
           print("Anonymous user convert email");
           await AuthService.convertFromAnonToEmail(

@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        //ChangeNotifierProvider<User>(create: (context) => User()),
         StreamProvider<User>.value(
           value: _auth.user,
         ),
@@ -96,7 +97,14 @@ class _BaseScaffoldState extends State<BaseScaffold> {
         builder: (context) {
           final user = Provider.of<User>(context);
           if (user == null) {
-            return Text("You should be connected");
+            return Column(
+              children: <Widget>[
+                Container(
+                  padding:EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
+                  child: Text("You should be connected",
+                  style: TextStyle(fontSize: 16),)),
+              ],
+            );
           } else {
             return Form(
               child: Column(

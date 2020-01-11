@@ -14,10 +14,9 @@ class DatabaseService {
           .document(uid)
           .setData({
         'uid': uid,
-        'uidRegister': uid,
         'pseudo': pseudo,
         'email': email,
-        'dateRegister': DateTime.now(),
+        'dateRegisterEmail': DateTime.now(),
       });
     } else {
       return await Firestore.instance

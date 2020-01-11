@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter/services.dart';
 
@@ -37,6 +39,18 @@ class AuthService {
 
 
   // sign in with email and password
+
+    static Future signInWithEmailAndPassword({String email, String password}) async {
+    try {
+      AuthResult result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      FirebaseUser user = result.user;
+      sleep(Duration(seconds: 1));
+      return user;
+    } catch (error) {
+      print(error.toString());
+      return null;
+    } 
+  }
 
   // register with email and password
     static Future registerWithEmail(
