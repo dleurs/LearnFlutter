@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +27,7 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     //final user = Provider.of<User>(context);
     // not necessary for sign in, anon or not anon
-    final loading = Provider.of<Loading>(context);
+    var loading = Provider.of<Loading>(context);
 
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -129,6 +131,12 @@ class _SignInState extends State<SignIn> {
         //need await so it has chance to go through error if found.
         await AuthService.signInWithEmailAndPassword(
             email: email, password: password);
+        var user = Provider.of<User>(context);
+        /*while (user==null || !user.databaseInfoLoaded) {
+          print("wait");
+          sleep(Duration(microseconds: 200));
+          user = Provider.of<User>(context);
+        }*/
         loading.switchLoading();
       } catch (e) {
         loading.switchLoading();

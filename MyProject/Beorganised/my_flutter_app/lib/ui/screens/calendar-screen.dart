@@ -7,7 +7,7 @@ class CalendarScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    var user = Provider.of<User>(context);
 
     return Center(
       child: Column(

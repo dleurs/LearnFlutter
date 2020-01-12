@@ -8,7 +8,7 @@ import 'package:my_flutter_app/utils/database.dart';
 class TodosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    var user = Provider.of<User>(context);
     return StreamProvider<List<Todo>>.value(
       value: user != null ? DatabaseService().todosFromDefaultTodoList(user.uid) : null,
       child: TodoList(),
@@ -19,7 +19,7 @@ class TodosScreen extends StatelessWidget {
 class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final todos = Provider.of<List<Todo>>(context) ?? [];
+    var todos = Provider.of<List<Todo>>(context) ?? [];
     todos.insert(0, null); // to add a title
     // it is not possible to add ListTile here because todos is composed of Todo
 

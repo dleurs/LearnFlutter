@@ -8,7 +8,6 @@ class DatabaseService {
   DatabaseService({this.uid});
 
   Future<void> updateUserData({String pseudo, String email}) async {
-    if (pseudo != null && email != null) {
       return await Firestore.instance
           .collection('users')
           .document(uid)
@@ -18,16 +17,6 @@ class DatabaseService {
         'email': email,
         'dateRegisterEmail': DateTime.now(),
       });
-    } else {
-      return await Firestore.instance
-          .collection('users')
-          .document(uid)
-          .setData({
-        'uid': uid,
-        'uidAnon': uid,
-        'dateRegisterAnonymous': DateTime.now(),
-      });
-    }
     //FirebaseAuth
   }
 

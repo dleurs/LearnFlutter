@@ -16,7 +16,6 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   final AuthService _auth = AuthService();
   bool register0SignIn1 = false;
-  bool loadingVisible = false;
 
   void _switchRegisterSignIn() {
     setState(() {
@@ -26,8 +25,8 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
-    final loading = Provider.of<Loading>(context);
+    var user = Provider.of<User>(context);
+    var loading = Provider.of<Loading>(context);
 
     List<Widget> buildMenu() {
       List<Widget> builder = [];
