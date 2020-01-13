@@ -1,6 +1,7 @@
 //library modal_progress_hud;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 ///
 /// Wrap around any widget that makes an async call to show a modal progress
@@ -53,19 +54,22 @@ class LoadingScreen extends StatelessWidget {
       if (offset == null) {
         layOutProgressIndicator = Center(
             child: Container(
-                height: 60,
-                width: 60,
+                height: 100,
+                width: 100,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
+                  //color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
                 ),
                 //need this due to bug...https://github.com/flutter/flutter/issues/18399
                 child: Align(
                   alignment: Alignment.center,
                   child: SizedBox(
-                    child: CircularProgressIndicator(),
-                    height: 30.0,
-                    width: 30.0,
+                    child: SpinKitCircle(
+                      color: Colors.blue,
+                      size: 80.0,
+                    ),
+                    height: 80.0,
+                    width: 80.0,
                   ),
                 )));
       } else {

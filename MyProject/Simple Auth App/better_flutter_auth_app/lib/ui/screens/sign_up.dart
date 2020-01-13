@@ -1,3 +1,4 @@
+import 'package:better_flutter_auth_app/util/state_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
@@ -209,8 +210,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ));
         });
         //now automatically login user too
-        //await StateWidget.of(context).logInUser(email, password);
-        await Navigator.pushNamed(context, '/signin');
+        await StateWidget.of(context).logInUser(email, password);
+        await Navigator.pushNamed(context, '/');
       } catch (e) {
         _changeLoadingVisible();
         print("Sign Up Error: $e");

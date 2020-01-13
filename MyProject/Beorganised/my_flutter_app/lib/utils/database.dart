@@ -1,22 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:my_flutter_app/models/todo.dart';
 import 'package:my_flutter_app/models/user.dart';
 
 class DatabaseService {
   final String uid;
-  DatabaseService({this.uid});
+  DatabaseService({@required this.uid});
 
-  Future<void> updateUserData({String pseudo, String email}) async {
-      return await Firestore.instance
-          .collection('users')
-          .document(uid)
-          .setData({
-        'uid': uid,
-        'pseudo': pseudo,
-        'email': email,
-        'dateRegisterEmail': DateTime.now(),
-      });
+  Stream<User> streamUser() {
+    return Firestore.instance
+        .collection('users')
+        .document(uid)
+        .snapshots()
+        .map((snap) => User.fromMap(snap.data));
+  }
+
+  Future<User> getUser() {
+    return Firestore.instance
+        .collection('users')
+        .document(uid)
+        .get().then((doc) => User.fromMap(doc.data));
+  }
+
+
+  Future<void> updateUserData({@required String pseudo, @required String email}) async {
+    return await Firestore.instance.collection('users').document(uid).setData({
+      'uid': uid,
+      'isAnonymous': false,
+      'pseudo': pseudo,
+      'email': email,
+      'dateRegisterEmail': DateTime.now(),
+    });
+    //FirebaseAuth
+  }
+
+  Future<void> updateUserDataAnonymous() async {
+    return await Firestore.instance.collection('users').document(uid).setData({
+      'uid': uid,
+      'isAnonymous': true,
+      'dateRegisterAnonymous': DateTime.now(),
+    });
     //FirebaseAuth
   }
 
@@ -45,10 +68,10 @@ class DatabaseService {
     }).toList();
   }
 
-  Stream<List<Todo>> todosFromDefaultTodoList(String userUid) {
+  Stream<List<Todo>> todosFromDefaultTodoList() {
     return Firestore.instance
         .collection('todoLists')
-        .document(userUid)
+        .document(uid)
         .collection('todos')
         .snapshots()
         .map(_todoListFromSnapshot);

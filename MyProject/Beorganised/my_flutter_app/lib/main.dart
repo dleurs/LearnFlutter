@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_flutter_app/models/loading.dart';
+import 'package:my_flutter_app/utils/database.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,35 +31,43 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        //ChangeNotifierProvider<User>(create: (context) => User()),
-        StreamProvider<User>.value(
-          value: _auth.user,
-        ),
-        ChangeNotifierProvider<Loading>(create: (context) => Loading()),
-      ],
-      child: MaterialApp(
-        title: 'My Flutter App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: FutureBuilder<bool>(
-            future: _userAlreadyOpenApp(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text("Error - return function userAlreadyOpenApp");
-              } else if (!snapshot.hasData) {
-                return LoadingNoModalBarrier();
-              } else if (snapshot.hasData && snapshot.data == false) {
-                _auth.signInAnonymous();
-                return BaseScaffold();
-              } else {
-                return BaseScaffold();
-              }
-            }),
-      ),
-    );
+        providers: [
+          StreamProvider<FirebaseUser>(
+              create: (context) => FirebaseAuth.instance.onAuthStateChanged),
+          //ProxyProvider<User, FirebaseUser>(),
+          //StreamProvider<User>.value(value: _auth.user,),
+          ChangeNotifierProvider<Loading>(create: (context) => Loading()),
+        ],
+        child: Consumer<FirebaseUser>(builder: (context, firebaseUser, child) {
+          return StreamProvider<User>(
+            create: (context) =>
+                DatabaseService(uid: firebaseUser.uid).streamUser(),
+                /*firebaseUser != null
+                    ? DatabaseService(uid: firebaseUser.uid).streamUser()
+                    : null,*/
+            child: MaterialApp(
+              title: 'My Flutter App',
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              debugShowCheckedModeBanner: false,
+              home: FutureBuilder<bool>(
+                  future: _userAlreadyOpenApp(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text("Error - return function userAlreadyOpenApp");
+                    } else if (!snapshot.hasData) {
+                      return LoadingNoModalBarrier();
+                    } else if (snapshot.hasData && snapshot.data == false) {
+                      _auth.signInAnonymous();
+                      return BaseScaffold();
+                    } else {
+                      return BaseScaffold();
+                    }
+                  }),
+            ),
+          );
+        }));
   }
 }
 
@@ -115,7 +125,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
                   Container(
                     padding:
                         EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-                    child: Text("Hello - Add todo here"),
+                    child: Text("Create a todo here"),
                   ),
                   Text(user.toString()),
                 ],

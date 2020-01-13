@@ -1,59 +1,41 @@
-import 'dart:io';
+//import 'dart:io';
 
 import "package:firebase_auth/firebase_auth.dart";
 import 'package:flutter/services.dart';
 
-import 'package:my_flutter_app/models/user.dart';
+//import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  User _userFromFirebaseUser(FirebaseUser user) {
-    if (user == null) {
-      return null;
-    }
-    User userUser = User(uid: user.uid);
-    userUser.updateUser();
-    return userUser;
-  }
-
-  Stream<User> get user {
-    return _auth.onAuthStateChanged
-      .map((FirebaseUser user) => _userFromFirebaseUser(user));
-  }
-
   // sign in anon
-  
-  Future signInAnonymous() async {
+
+  void signInAnonymous() async {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
-      DatabaseService(uid:user.uid).updateUserData();
-      return _userFromFirebaseUser(user);
+      DatabaseService(uid: user.uid).updateUserDataAnonymous();
     } catch (e) {
-      //print(e.toString());
-      return null;
+      print(e.toString());
     }
   }
 
-
   // sign in with email and password
 
-    static Future signInWithEmailAndPassword({String email, String password}) async {
+  static Future signInWithEmailAndPassword(
+      {String email, String password}) async {
     try {
-      AuthResult result = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-      FirebaseUser user = result.user;
-      sleep(Duration(seconds: 1));
-      return user;
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      //FirebaseUser user = result.user;
     } catch (error) {
       print(error.toString());
-      return null;
-    } 
+    }
   }
 
   // register with email and password
-    static Future registerWithEmail(
+  static Future registerWithEmail(
       {String pseudo, String email, String password}) async {
     try {
       FirebaseUser user = (await FirebaseAuth.instance
@@ -63,11 +45,10 @@ class AuthService {
           .updateUserData(pseudo: pseudo, email: email);
     } catch (error) {
       print(error.toString());
-      return null;
     }
   }
 
-   static Future convertFromAnonToEmail(
+  static Future convertFromAnonToEmail(
       {String pseudo, String email, String password}) async {
     final currentUser = await FirebaseAuth.instance.currentUser();
     final credential =
@@ -81,10 +62,9 @@ class AuthService {
   // sign out
   Future signOut() async {
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
     } catch (error) {
-      //print(error.toString());
-      return null;
+      print(error.toString());
     }
   }
 

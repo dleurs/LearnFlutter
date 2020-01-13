@@ -1,43 +1,29 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:my_flutter_app/utils/database.dart';
 
 class User {
   final String uid;
-  bool databaseUserInfoLoaded = false;
-  String pseudo;
-  String email;
+  final bool isAnonymous;
+  final String pseudo;
+  final String email;
 
-  User({this.uid});
+  User({@required this.uid, @required this.isAnonymous, this.pseudo, this.email});
 
-  bool get isAnonymous {
-    return (pseudo == null && email == null);
+  factory User.fromMap(Map data) {
+    return User(
+      uid: data['uid'],
+      isAnonymous: data['isAnonymous'],
+      pseudo: data['pseudo'] ?? 'No pseudo',
+      email: data['email'] ?? 'No email',
+    );
   }
 
-  bool get databaseInfoLoaded {
-    return (databaseUserInfoLoaded);
-  }
+  //bool get isAnonymous => isAnonymous; // no need because isAnonymous is not private
 
-
-
-  Future updateUser() async {
-    Map<String, dynamic> dataUserFirestore =
-        await DatabaseService(uid: uid).getUserFirestore();
-    print(dataUserFirestore);
-    this.pseudo = dataUserFirestore["pseudo"] ?? null;
-    this.email = dataUserFirestore["email"] ?? null;
-    this.databaseUserInfoLoaded = true;
-  }
-
-  Future<FirebaseUser> getFirebaseUser() async {
-    final currentUser = await FirebaseAuth.instance.currentUser();
-    return currentUser;
-  }
 
   String toString() {
-    String res = "uid: ${this.uid}, loadDatabase: ${this.databaseUserInfoLoaded}";
+    String res = "uid: ${this.uid},";
     if (this.isAnonymous) {
       res += ", anonymous user";
     } else {

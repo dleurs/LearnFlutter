@@ -142,7 +142,6 @@ class _RegisterState extends State<Register> {
           print("Anonymous user convert email");
           await AuthService.convertFromAnonToEmail(
               pseudo: pseudo, email: email, password: password);
-          user.updateUser();
         } else {
           print("No anonymous user create account");
           await AuthService.registerWithEmail(

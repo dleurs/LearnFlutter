@@ -1,12 +1,12 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 import 'package:my_flutter_app/models/loading.dart';
-import 'package:my_flutter_app/models/user.dart';
+//import 'package:my_flutter_app/models/user.dart';
 import 'package:my_flutter_app/utils/auth.dart';
-import 'package:my_flutter_app/utils/loading-ui.dart';
+//import 'package:my_flutter_app/utils/loading-ui.dart';
 import 'package:my_flutter_app/utils/validator.dart';
 import 'package:provider/provider.dart';
 
@@ -131,12 +131,6 @@ class _SignInState extends State<SignIn> {
         //need await so it has chance to go through error if found.
         await AuthService.signInWithEmailAndPassword(
             email: email, password: password);
-        var user = Provider.of<User>(context);
-        /*while (user==null || !user.databaseInfoLoaded) {
-          print("wait");
-          sleep(Duration(microseconds: 200));
-          user = Provider.of<User>(context);
-        }*/
         loading.switchLoading();
       } catch (e) {
         loading.switchLoading();
